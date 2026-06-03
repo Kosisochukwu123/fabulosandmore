@@ -4,7 +4,7 @@ import { FiUpload, FiX, FiImage, FiMove } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import '../../styles/ImageUploader.css';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
 
 export default function ImageUploader({ productId, existingImages = [], onUpdated }) {

@@ -15,7 +15,6 @@ import { MdOutlineBlender } from 'react-icons/md';
 import { useCart } from '../context/CartContext';
 import AIRecommendations from '../components/ai/AIRecommendations';
 
-const API_URL = import.meta.env.VITE_API_URL;
 
 
 const HERO_SLIDES = [
@@ -110,6 +109,10 @@ export default function HomePage() {
   const { addToCart }                           = useCart();
   const navigate                                = useNavigate();
   const slideTimer                              = useRef(null);
+
+  
+const API_URL = process.env.REACT_APP_API_URL;
+console.log("API_URL:", API_URL);
 
   useEffect(() => {
     axios.get(`${API_URL}/api/products?featured=true&limit=6`)

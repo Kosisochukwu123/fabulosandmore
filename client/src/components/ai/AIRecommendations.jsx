@@ -15,12 +15,15 @@ export default function AIRecommendations({ currentProduct }) {
   const [loading, setLoading]     = useState(true);
   const [activeChip, setActiveChip] = useState(0);
 
+const API_URL = process.env.REACT_APP_API_URL;
+
+
   useEffect(() => {
     if (!user) { setLoading(false); return; }
 
     const browsed = JSON.parse(localStorage.getItem('fab_browsed') || '[]');
 
-    axios.post('/api/ai/recommendations', {
+    axios.post(`${API_URL}/api/ai/recommendations`, {
       browsedProducts: browsed,
       currentProduct: currentProduct?._id || null,
     })
@@ -29,10 +32,10 @@ export default function AIRecommendations({ currentProduct }) {
         const first = r.data.data?.recommendations?.[0];
         if (first?.searchTerm) {
           return axios.get(
-            `/api/products?search=${encodeURIComponent(first.searchTerm)}&limit=4`
+            `${API_URL}/api/products?search=${encodeURIComponent(first.searchTerm)}&limit=4`
           );
         }
-        return axios.get('/api/products?featured=true&limit=4');
+        return axios.get(`${API_URL}/api/products?featured=true&limit=4`);
       })
       .then(r => setProducts(r?.data?.products || []))
       .catch(() => setData(null))
@@ -44,7 +47,7 @@ export default function AIRecommendations({ currentProduct }) {
     setActiveChip(idx);
     try {
       const { data } = await axios.get(
-        `/api/products?search=${encodeURIComponent(rec.searchTerm)}&limit=4`
+        `${API_URL} /api/products?search=${encodeURIComponent(rec.searchTerm)}&limit=4`
       );
       setProducts(data.products || []);
     } catch {/* silent */}

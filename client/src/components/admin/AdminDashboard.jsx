@@ -11,7 +11,7 @@ import {
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 const GOLD   = '#D4AF37';
 const COLORS = [GOLD, '#1A1A1A', '#3B82F6', '#22C55E', '#F59E0B', '#EF4444'];
 

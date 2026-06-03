@@ -16,7 +16,7 @@ const CATEGORIES = [
 ];
 
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
 
 const QUANTITIES = ['10–50 units', '51–100 units', '101–500 units', '500+ units'];
