@@ -13,6 +13,9 @@ import '../styles/CheckoutPage.css';
 
 const STEPS = ['Delivery', 'Payment', 'Review'];
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const NIGERIAN_STATES = [
   'Abia','Adamawa','Akwa Ibom','Anambra','Bauchi','Bayelsa','Benue','Borno',
   'Cross River','Delta','Ebonyi','Edo','Ekiti','Enugu','FCT - Abuja','Gombe',
@@ -97,7 +100,7 @@ export default function CheckoutPage() {
     setPlacing(true);
     try {
       const items = cart.map(i => ({ product: i._id, quantity: i.quantity }));
-      const { data } = await axios.post('/api/orders', {
+      const { data } = await axios.post(`${API_URL}/api/orders`, {
         items,
         shippingAddress: address,
         billingAddress: address,
@@ -107,7 +110,7 @@ export default function CheckoutPage() {
 
       // For card payment — create Stripe intent
       if (payment === 'stripe') {
-        await axios.post('/api/payment/create-intent', { orderId: data.order._id });
+        await axios.post(`${API_URL}/api/payment/create-intent`, { orderId: data.order._id });
         // In production: load Stripe.js and confirm payment here
         // For now simulate success
         await axios.put(`/api/orders/${data.order._id}/status`, {

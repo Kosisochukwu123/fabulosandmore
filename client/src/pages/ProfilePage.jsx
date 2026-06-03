@@ -11,6 +11,9 @@ import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 import '../styles/ProfilePage.css';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const TABS = [
   { id: 'profile',   label: 'My Profile',   icon: FiUser    },
   { id: 'addresses', label: 'Addresses',     icon: FiMapPin  },
@@ -25,7 +28,7 @@ export default function ProfilePage() {
   const [ordersLoading, setOrdersLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('/api/orders/my-orders')
+    axios.get(`${API_URL}/api/orders/my-orders`)
       .then(r => setOrders(r.data.orders || []))
       .catch(() => {})
       .finally(() => setOrdersLoading(false));

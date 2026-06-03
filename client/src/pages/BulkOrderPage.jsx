@@ -15,6 +15,10 @@ const CATEGORIES = [
   'Storage Solutions', 'Cleaning Tools', 'Small Appliances', 'Mixed / Other'
 ];
 
+
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const QUANTITIES = ['10–50 units', '51–100 units', '101–500 units', '500+ units'];
 
 const BENEFITS = [
@@ -63,7 +67,7 @@ export default function BulkOrderPage() {
     }
     setSubmitting(true);
     try {
-      await axios.post('/api/ai/whatsapp/bulk-inquiry', form);
+      await axios.post(`${API_URL}/api/ai/whatsapp/bulk-inquiry`, form);
       setSubmitted(true);
       toast.success('Inquiry sent! We\'ll contact you within 2 hours.');
     } catch {

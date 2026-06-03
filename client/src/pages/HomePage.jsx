@@ -15,6 +15,9 @@ import { MdOutlineBlender } from 'react-icons/md';
 import { useCart } from '../context/CartContext';
 import AIRecommendations from '../components/ai/AIRecommendations';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const HERO_SLIDES = [
   {
     image: '/images/hero-kitchen.jpg',
@@ -109,10 +112,10 @@ export default function HomePage() {
   const slideTimer                              = useRef(null);
 
   useEffect(() => {
-    axios.get('/api/products?featured=true&limit=6')
+    axios.get(`${API_URL}/api/products?featured=true&limit=6`)
       .then(r => setFeaturedProducts(r.data.products || []))
       .catch(() => setApiError(true));
-    axios.get('/api/products?sort=popular&limit=8')
+    axios.get(`${API_URL}/api/products?sort=popular&limit=8`)
       .then(r => setTopProducts(r.data.products || []))
       .catch(() => {});
   }, []);

@@ -15,6 +15,9 @@ import LazyImage from '../components/LazyImage';
 import toast from 'react-hot-toast';
 import '../styles/ProductPage.css';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 export default function ProductPage() {
   const { id }        = useParams();
   const navigate      = useNavigate();
@@ -40,13 +43,13 @@ export default function ProductPage() {
     setQty(1);
     setAddedToCart(false);
 
-    axios.get(`/api/products/${id}`)
+    axios.get(`${API_URL}/api/products/${id}`)
       .then(r => {
         setProduct(r.data.product);
         const browsed = JSON.parse(localStorage.getItem('fab_browsed') || '[]');
         const updated = [r.data.product.name, ...browsed.filter(b => b !== r.data.product.name)].slice(0, 10);
         localStorage.setItem('fab_browsed', JSON.stringify(updated));
-        return axios.get(`/api/products?category=${encodeURIComponent(r.data.product.category)}&limit=5`);
+        return axios.get(`${API_URL}/api/products?category=${encodeURIComponent(r.data.product.category)}&limit=5`);
       })
       .then(r => setRelated(r.data.products?.filter(p => p._id !== id).slice(0, 4) || []))
       .catch(() => toast.error('Could not load product'))
@@ -75,9 +78,9 @@ export default function ProductPage() {
     if (!user) { toast.error('Please login to leave a review'); return; }
     setSubmitting(true);
     try {
-      await axios.post(`/api/products/${id}/reviews`, review);
+      await axios.post(`${API_URL}/api/products/${id}/reviews`, review);
       toast.success('Review submitted!');
-      const r = await axios.get(`/api/products/${id}`);
+      const r = await axios.get(`${API_URL}/api/products/${id}`);
       setProduct(r.data.product);
       setReview({ rating: 5, comment: '' });
     } catch (err) {

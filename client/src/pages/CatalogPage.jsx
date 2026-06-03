@@ -39,6 +39,10 @@ const PRICE_RANGES = [
   { label: "Above ₦50,000", min: "50000", max: "" },
 ];
 
+
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 export default function CatalogPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -67,7 +71,7 @@ export default function CatalogPage() {
     if (maxPrice) params.append("maxPrice", maxPrice);
 
     axios
-      .get(`/api/products?${params}`)
+      .get(`${API_URL}/api/products?${params}`)
       .then((r) => {
         setProducts(r.data.products || []);
         setTotal(r.data.total || 0);
