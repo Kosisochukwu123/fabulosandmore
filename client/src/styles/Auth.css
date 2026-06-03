@@ -1,0 +1,386 @@
+/* ============================================================
+   AUTH PAGES — Auth.css
+   Login, Register, ForgotPassword
+   ============================================================ */
+
+.auth-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f9f9f9 0%, #f0ece0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.auth-card {
+  background: #fff;
+  border-radius: 22px;
+  padding: 44px 40px;
+  width: 460px;
+  max-width: 100%;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e8e8e8;
+}
+
+/* ---- Logo ---- */
+.auth-logo {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.auth-logo-main {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #d4af37;
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.auth-logo-sub {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  color: #d4af37;
+  letter-spacing: 5px;
+  display: block;
+  margin-bottom: 18px;
+}
+
+.auth-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.auth-subtitle {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 0;
+}
+
+.auth-divider {
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(135deg, #d4af37, #b8941f);
+  border-radius: 2px;
+  margin: 16px auto 0;
+}
+
+/* ---- Error / success banner ---- */
+.auth-banner {
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.auth-banner.error {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+
+.auth-banner.success {
+  background: #dcfce7;
+  color: #16a34a;
+  border: 1px solid #86efac;
+}
+
+/* ---- Form ---- */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.auth-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.auth-input {
+  padding: 12px 14px;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #1a1a1a;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #fff;
+  width: 100%;
+}
+
+.auth-input:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.auth-input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+}
+
+/* Password wrap */
+.auth-password-wrap {
+  position: relative;
+}
+
+.auth-password-wrap .auth-input {
+  padding-right: 46px;
+}
+
+.auth-password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #aaa;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  transition: color 0.18s;
+}
+
+.auth-password-toggle:hover {
+  color: #d4af37;
+}
+
+/* Phone wrap */
+.auth-phone-wrap {
+  display: flex;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.auth-phone-wrap:focus-within {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.auth-phone-prefix {
+  padding: 12px 14px;
+  background: #f9f9f9;
+  border-right: 1.5px solid #e8e8e8;
+  font-size: 14px;
+  color: #555;
+  font-weight: 600;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.auth-phone-wrap .auth-input {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  flex: 1;
+}
+
+/* Password strength */
+.auth-pwd-strength {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.auth-pwd-bar {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.auth-pwd-segment {
+  height: 4px;
+  flex: 1;
+  border-radius: 2px;
+  transition: background 0.3s;
+}
+
+/* Forgot password link */
+.auth-forgot {
+  text-align: right;
+  margin-top: -6px;
+}
+
+.auth-forgot a {
+  font-size: 13px;
+  color: #d4af37;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.18s;
+}
+
+.auth-forgot a:hover {
+  opacity: 0.75;
+}
+
+/* Terms checkbox */
+.auth-terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.auth-terms input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: #d4af37;
+  cursor: pointer;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.auth-terms a {
+  color: #d4af37;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Submit button */
+.auth-submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #d4af37, #b8941f);
+  color: #1a1a1a;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 26px rgba(212, 175, 55, 0.5);
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* OR divider */
+.auth-or {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #ccc;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 4px 0;
+}
+
+.auth-or::before,
+.auth-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e8e8e8;
+}
+
+/* WhatsApp button */
+.auth-whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px;
+  background: #25d366;
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  transition: background 0.2s, transform 0.2s;
+  margin-bottom: 4px;
+}
+
+.auth-whatsapp-btn:hover {
+  background: #128c3e;
+  transform: translateY(-1px);
+}
+
+/* Switch link */
+.auth-switch {
+  text-align: center;
+  font-size: 14px;
+  color: #888;
+  margin-top: 16px;
+}
+
+.auth-switch a {
+  color: #d4af37;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.18s;
+}
+
+.auth-switch a:hover {
+  opacity: 0.75;
+}
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+
+@media (max-width: 520px) {
+  .auth-card {
+    padding: 32px 20px;
+    border-radius: 18px;
+  }
+
+  .auth-title {
+    font-size: 22px;
+  }
+
+  .auth-submit-btn {
+    font-size: 15px;
+    padding: 13px;
+  }
+}
+
+@media (max-width: 380px) {
+  .auth-page {
+    padding: 20px 12px;
+  }
+
+  .auth-card {
+    padding: 28px 16px;
+  }
+}

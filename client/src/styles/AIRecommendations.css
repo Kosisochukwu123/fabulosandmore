@@ -1,0 +1,285 @@
+/* ============================================================
+   AI RECOMMENDATIONS — AIRecommendations.css
+   ============================================================ */
+
+.ai-rec-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle gold radial glow */
+.ai-rec-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 50%, rgba(212, 175, 55, 0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* ---- Header ---- */
+.ai-rec-header {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.ai-rec-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #d4af37;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 18px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  letter-spacing: 0.3px;
+}
+
+.ai-rec-badge-icon {
+  font-size: 15px;
+}
+
+.ai-rec-title {
+  font-family: 'Playfair Display', serif;
+  color: #fff;
+  font-size: clamp(22px, 3vw, 36px);
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.ai-rec-message {
+  color: #aaa;
+  font-size: 15px;
+  font-style: italic;
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ---- Category chips ---- */
+.ai-rec-chips {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 36px;
+  position: relative;
+  z-index: 1;
+}
+
+.ai-rec-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  text-align: left;
+  max-width: 260px;
+}
+
+.ai-rec-chip:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: #d4af37;
+  transform: translateY(-2px);
+}
+
+.ai-rec-chip-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #d4af37;
+  white-space: nowrap;
+}
+
+.ai-rec-chip-reason {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.ai-rec-chip-arrow {
+  color: #d4af37;
+  font-size: 15px;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.ai-rec-chip:hover .ai-rec-chip-arrow {
+  transform: translateX(3px);
+}
+
+/* ---- Product cards override for dark bg ---- */
+.ai-rec-section .products-grid {
+  position: relative;
+  z-index: 1;
+}
+
+.ai-rec-section .product-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.ai-rec-section .product-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+}
+
+.ai-rec-section .card-title {
+  color: #fff;
+}
+
+.ai-rec-section .product-card-category {
+  color: #d4af37;
+}
+
+.ai-rec-section .card-price {
+  color: #d4af37;
+}
+
+/* ---- Loading skeleton ---- */
+.ai-rec-skeleton {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.ai-rec-skeleton-card {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  overflow: hidden;
+  animation: ai-skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.ai-rec-skeleton-img {
+  height: 180px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ai-rec-skeleton-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ai-rec-skeleton-line {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+}
+
+.ai-rec-skeleton-line.short {
+  width: 60%;
+}
+
+@keyframes ai-skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* ---- Empty / not logged in state ---- */
+.ai-rec-login-prompt {
+  text-align: center;
+  padding: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+.ai-rec-login-prompt p {
+  color: #888;
+  font-size: 15px;
+  margin-bottom: 16px;
+}
+
+.ai-rec-login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #d4af37, #b8941f);
+  color: #1a1a1a;
+  border-radius: 9px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ai-rec-login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+}
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+
+@media (max-width: 900px) {
+  .ai-rec-skeleton {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .ai-rec-section {
+    padding: 56px 0;
+  }
+
+  .ai-rec-chips {
+    gap: 8px;
+  }
+
+  .ai-rec-chip {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .ai-rec-skeleton {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .ai-rec-skeleton {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Active chip ---- */
+.ai-rec-chip.active {
+  background: rgba(212, 175, 55, 0.18);
+  border-color: #d4af37;
+}
+
+/* ---- Product card stars ---- */
+.ai-rec-card-stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.ai-rec-star {
+  font-size: 13px;
+  color: #d4af37;
+}
+
+.ai-rec-star-count {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  margin-left: 3px;
+}

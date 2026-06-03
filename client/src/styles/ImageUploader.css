@@ -1,0 +1,265 @@
+/* ============================================================
+   IMAGE UPLOADER — ImageUploader.css
+   ============================================================ */
+
+.img-uploader {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ---- Drop zone ---- */
+.img-drop-zone {
+  border: 2px dashed #d4af37;
+  border-radius: 14px;
+  padding: 36px 20px;
+  text-align: center;
+  cursor: pointer;
+  background: #fbf5e0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s, border-color 0.2s, transform 0.18s;
+  user-select: none;
+}
+
+.img-drop-zone:hover {
+  background: #f5e9c0;
+  border-color: #b8941f;
+  transform: scale(1.01);
+}
+
+.img-drop-zone.drag-over {
+  background: #f0e0a0;
+  border-color: #b8941f;
+  transform: scale(1.02);
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+}
+
+.img-drop-zone.uploading {
+  cursor: not-allowed;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.img-drop-icon {
+  font-size: 36px;
+  color: #d4af37;
+}
+
+.img-drop-text {
+  font-size: 14px;
+  color: #555;
+}
+
+.img-drop-text strong {
+  color: #d4af37;
+}
+
+.img-drop-sub {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* Uploading state */
+.img-uploading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #888;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ---- Preview grid ---- */
+.img-preview-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.img-preview-item {
+  position: relative;
+  width: 86px;
+  height: 86px;
+  border-radius: 12px;
+  overflow: visible;
+  transition: transform 0.2s;
+}
+
+.img-preview-item:hover {
+  transform: scale(1.04);
+}
+
+.img-preview-thumb {
+  width: 86px;
+  height: 86px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #e8e8e8;
+  display: block;
+}
+
+.img-preview-item:first-child .img-preview-thumb {
+  border-color: #d4af37;
+}
+
+/* Main badge */
+.img-preview-main-badge {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #d4af37;
+  color: #1a1a1a;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+/* Remove button */
+.img-preview-remove {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ef4444;
+  color: #fff;
+  border: 2px solid #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.15s;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.img-preview-remove:hover {
+  background: #dc2626;
+  transform: scale(1.15);
+}
+
+/* ---- Reorder hint ---- */
+.img-reorder-hint {
+  font-size: 12px;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ---- Empty state ---- */
+.img-no-images {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  color: #bbb;
+  padding: 6px 2px;
+}
+
+.img-no-images svg {
+  font-size: 18px;
+  color: #d4af37;
+  flex-shrink: 0;
+}
+
+/* ---- Upload progress bar ---- */
+.img-progress-bar {
+  height: 4px;
+  background: #e8e8e8;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.img-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d4af37, #22c55e);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+
+@media (max-width: 480px) {
+  .img-preview-item {
+    width: 70px;
+    height: 70px;
+  }
+
+  .img-preview-thumb {
+    width: 70px;
+    height: 70px;
+  }
+
+  .img-drop-zone {
+    padding: 24px 16px;
+  }
+
+  .img-drop-icon {
+    font-size: 28px;
+  }
+}
+
+/* ---- Set as main button ---- */
+.img-set-main-btn {
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a1a;
+  color: #d4af37;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+  z-index: 2;
+}
+
+.img-set-main-btn:hover {
+  background: #d4af37;
+  color: #1a1a1a;
+}
+
+/* ---- Add more button ---- */
+.img-add-more-btn {
+  width: 86px;
+  height: 86px;
+  border: 2px dashed #d4af37;
+  border-radius: 12px;
+  background: #fbf5e0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #d4af37;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: background 0.2s, transform 0.18s;
+}
+
+.img-add-more-btn:hover {
+  background: #f5e9c0;
+  transform: scale(1.04);
+}
+
+.img-add-more-btn svg {
+  font-size: 20px;
+}
