@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import {
   FiPackage, FiShoppingCart, FiUsers, FiTrendingUp,
   FiBox, FiExternalLink, FiMenu, FiX, FiLogOut,
-  FiBarChart2, FiTruck
+  FiTruck, FiSettings   // ← add FiSettings here
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 import '../../styles/AdminDashboard.css';
@@ -14,6 +14,7 @@ const NAV_LINKS = [
   { label: 'Orders',    icon: FiShoppingCart,path: '/admin/orders'    },
   { label: 'Products',  icon: FiPackage,     path: '/admin/products'  },
   { label: 'Suppliers', icon: FiTruck,       path: '/admin/suppliers' },
+  { label: 'Settings',  icon: FiSettings,    path: '/admin/settings'  }, // ← this line
 ];
 
 export default function AdminLayout() {

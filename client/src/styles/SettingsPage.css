@@ -1,0 +1,496 @@
+/* ============================================================
+   SETTINGS PAGE — SettingsPage.css
+   ============================================================ */
+
+.settings-page {
+  padding: 28px 28px 64px;
+  background: #f4f4f5;
+  min-height: 100vh;
+}
+
+/* ---- Top bar ---- */
+.settings-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.settings-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: #1a1a1a;
+  margin: 0 0 4px;
+}
+
+.settings-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #888;
+  margin: 0;
+}
+
+.settings-save-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  background: linear-gradient(135deg, #d4af37, #b8941f);
+  color: #1a1a1a;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.3);
+  transition: transform 0.18s, box-shadow 0.18s, opacity 0.18s;
+  white-space: nowrap;
+}
+
+.settings-save-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.45);
+}
+
+.settings-save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---- Layout ---- */
+.settings-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* ---- Sidebar tabs ---- */
+.settings-tabs {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e8e8e8;
+  overflow: hidden;
+  position: sticky;
+  top: 80px;
+}
+
+.settings-tab {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #888;
+  cursor: pointer;
+  text-align: left;
+  border-left: 3px solid transparent;
+  border-bottom: 1px solid #f5f5f5;
+  transition: all 0.18s;
+}
+
+.settings-tab:last-child { border-bottom: none; }
+
+.settings-tab:hover {
+  background: #f9f9f9;
+  color: #1a1a1a;
+}
+
+.settings-tab.active {
+  background: #fbf5e0;
+  color: #d4af37;
+  font-weight: 700;
+  border-left-color: #d4af37;
+}
+
+/* ---- Card ---- */
+.settings-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.settings-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: #1a1a1a;
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* ---- Form grid ---- */
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.settings-field-full {
+  grid-column: 1 / -1;
+}
+
+.settings-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.settings-toggle-label {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: #f9f9f9;
+  border-radius: 9px;
+  border: 1.5px solid #e8e8e8;
+  cursor: pointer;
+}
+
+.settings-input {
+  padding: 10px 13px;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 9px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: #1a1a1a;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.settings-input:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.settings-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.settings-hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  color: #aaa;
+  line-height: 1.5;
+}
+
+.settings-link-preview {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #d4af37;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Toggle button */
+.settings-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 28px;
+  color: #ccc;
+  display: flex;
+  padding: 0;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.settings-toggle.on {
+  color: #22c55e;
+}
+
+/* Colour picker row */
+.settings-color-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.settings-color-picker {
+  width: 44px;
+  height: 40px;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 9px;
+  cursor: pointer;
+  padding: 3px;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+/* Announcement preview */
+.settings-ann-preview {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Shipping preview */
+.settings-shipping-preview {
+  margin-top: 24px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 20px;
+}
+
+.settings-shipping-preview h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.settings-preview-box {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #555;
+}
+
+/* ================================================================
+   COUPONS
+   ================================================================ */
+
+.settings-coupons-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.settings-coupons-header .settings-section-title {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.settings-add-coupon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  background: #1a1a1a;
+  color: #d4af37;
+  border: none;
+  border-radius: 9px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+.settings-add-coupon-btn:hover { background: #2d2d2d; }
+
+.settings-coupon-form {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  border: 1px solid #e8e8e8;
+}
+
+.settings-coupon-form-footer {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.settings-no-coupons {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.settings-coupon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settings-coupon-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1.5px solid #e8e8e8;
+  background: #fff;
+  gap: 12px;
+  transition: border-color 0.18s;
+}
+
+.settings-coupon-item.active  { border-color: #d4af37; }
+.settings-coupon-item.inactive { opacity: 0.55; }
+
+.settings-coupon-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.settings-coupon-code {
+  font-family: 'Courier New', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  background: #fbf5e0;
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+.settings-coupon-details {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.settings-coupon-pct {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #22c55e;
+  background: #dcfce7;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+
+.settings-coupon-expiry {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #888;
+}
+
+.settings-coupon-expiry.expired {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.settings-coupon-uses {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.settings-coupon-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #888;
+  font-style: italic;
+}
+
+.settings-coupon-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.settings-coupon-delete {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid #fca5a5;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ef4444;
+  transition: background 0.18s;
+}
+
+.settings-coupon-delete:hover { background: #fee2e2; }
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+
+@media (max-width: 900px) {
+  .settings-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    position: static;
+  }
+
+  .settings-tab {
+    flex: 1;
+    min-width: 80px;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    justify-content: center;
+    text-align: center;
+    font-size: 12px;
+    padding: 10px 8px;
+  }
+
+  .settings-tab.active {
+    border-left: none;
+    border-bottom-color: #d4af37;
+  }
+}
+
+@media (max-width: 640px) {
+  .settings-page { padding: 16px 14px 48px; }
+  .settings-grid { grid-template-columns: 1fr; }
+  .settings-topbar { flex-direction: column; }
+  .settings-save-btn { width: 100%; justify-content: center; }
+  .settings-card { padding: 20px 16px; }
+}

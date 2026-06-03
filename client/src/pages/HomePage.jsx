@@ -112,7 +112,7 @@ export default function HomePage() {
 
   
 const API_URL = process.env.REACT_APP_API_URL;
-console.log("API_URL:", API_URL);
+// console.log("API_URL:", API_URL);
 
   useEffect(() => {
     axios.get(`${API_URL}/api/products?featured=true&limit=6`)

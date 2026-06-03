@@ -53,6 +53,7 @@ const ProductsAdminPage = lazy(() => import('./pages/admin/ProductsAdminPage'));
 const OrdersAdminPage   = lazy(() => import('./pages/admin/OrdersAdminPage'));
 const SuppliersPage     = lazy(() => import('./pages/admin/SuppliersPage'));
 const InventoryPage     = lazy(() => import('./pages/admin/InventoryPage'));
+const SettingsPage      = lazy(() => import('./pages/admin/SettingsPage'));  // ← this line
 
 /* ---- Helpers ---- */
 function LoadingFallback() {
@@ -124,6 +125,8 @@ export default function App() {
                 <Route path="orders"    element={<OrdersAdminPage />} />
                 <Route path="suppliers" element={<SuppliersPage />} />
                 <Route path="inventory" element={<InventoryPage />} />
+                <Route path="settings"  element={<SettingsPage />} />  {/* ← this line */}
+
               </Route>
 
               {/* ---- 404 ---- */}
