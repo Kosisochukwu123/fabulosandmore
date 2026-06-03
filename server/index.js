@@ -42,7 +42,7 @@ connectDB();
 /* ---- Security ---- */
 app.use(helmet({ crossOriginEmbedderPolicy: false, contentSecurityPolicy: false }));
 
-const allowedOrigins = [process.env.CLIENT_URL || 'http://localhost:3000', 'https://fabulosandmore.vercel.app/', 'http://localhost:3000', 'http://localhost:5000', 'https://fabulosandmore.onrender.com'];
+const allowedOrigins = [process.env.CLIENT_URL || 'http://localhost:3000', 'https://fabulosandmore.vercel.app', 'http://localhost:3000', 'http://localhost:5000', 'https://fabulosandmore.onrender.com'];
 app.use(cors({
   origin: (origin, cb) => { if (!origin || allowedOrigins.includes(origin)) cb(null, true); else cb(new Error(`CORS: ${origin} not allowed`)); },
   credentials: true,
