@@ -4,6 +4,9 @@ import { FiUpload, FiX, FiImage, FiMove } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import '../../styles/ImageUploader.css';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 export default function ImageUploader({ productId, existingImages = [], onUpdated }) {
   const [images, setImages]       = useState(existingImages);
   const [uploading, setUploading] = useState(false);
@@ -40,7 +43,7 @@ export default function ImageUploader({ productId, existingImages = [], onUpdate
 
     try {
       const { data } = await axios.put(
-        `/api/products/${productId}/images`,
+        `${API_URL}/api/products/${productId}/images`,
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -67,7 +70,7 @@ export default function ImageUploader({ productId, existingImages = [], onUpdate
   const removeImage = async (idx) => {
     const updated = images.filter((_, i) => i !== idx);
     try {
-      await axios.put(`/api/products/${productId}`, { images: updated });
+      await axios.put(`${API_URL}/api/products/${productId}`, { images: updated });
       setImages(updated);
       onUpdated?.(updated);
       toast.success('Image removed');
@@ -81,7 +84,7 @@ export default function ImageUploader({ productId, existingImages = [], onUpdate
     if (idx === 0) return;
     const updated = [images[idx], ...images.filter((_, i) => i !== idx)];
     try {
-      await axios.put(`/api/products/${productId}`, { images: updated });
+      await axios.put(`${API_URL}/api/products/${productId}`, { images: updated });
       setImages(updated);
       onUpdated?.(updated);
       toast.success('Main image updated');

@@ -11,6 +11,7 @@ import {
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 
+const API_URL = import.meta.env.VITE_API_URL;
 const GOLD   = '#D4AF37';
 const COLORS = [GOLD, '#1A1A1A', '#3B82F6', '#22C55E', '#F59E0B', '#EF4444'];
 
@@ -21,7 +22,7 @@ export default function AdminDashboard() {
   const [loading, setLoading]   = useState(true);
 
   useEffect(() => {
-    axios.get('/api/analytics/dashboard')
+    axios.get(`${API_URL}/api/analytics/dashboard`)
       .then(r => setData(r.data.data || {}))
       .catch(() => setData({}))
       .finally(() => setLoading(false));
