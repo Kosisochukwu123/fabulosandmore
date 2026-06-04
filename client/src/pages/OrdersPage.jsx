@@ -24,6 +24,8 @@ const STATUS_CONFIG = {
 
 const TRACKING_STEPS = ['confirmed','processing','packed','shipped','out_for_delivery','delivered'];
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function OrdersPage() {
   const { id } = useParams();                       // single order view
   const [searchParams] = useSearchParams();
@@ -38,13 +40,13 @@ export default function OrdersPage() {
   useEffect(() => {
     if (id) {
       // Single order detail
-      axios.get(`/api/orders/${id}`)
+      axios.get(`${API_URL}/api/orders/${id}`)
         .then(r => setOrder(r.data.order))
         .catch(() => toast.error('Order not found'))
         .finally(() => setLoading(false));
     } else {
       // All orders
-      axios.get('/api/orders/my-orders')
+      axios.get(`${API_URL}/api/orders/my-orders`)
         .then(r => setOrders(r.data.orders || []))
         .catch(() => toast.error('Could not load orders'))
         .finally(() => setLoading(false));

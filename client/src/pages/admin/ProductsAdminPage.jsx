@@ -51,6 +51,9 @@ const EMPTY_FORM = {
   isActive: true,
 };
 
+const API_URL = process.env.REACT_APP_API_URL;
+
+
 export default function ProductsAdminPage() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -70,7 +73,7 @@ export default function ProductsAdminPage() {
     if (search) params.append("search", search);
     if (category) params.append("category", category);
     axios
-      .get(`/api/products?${params}`)
+      .get(`${API_URL}/api/products?${params}`)
       .then((r) => {
         setProducts(r.data.products || []);
         setTotal(r.data.total || 0);
@@ -104,7 +107,7 @@ export default function ProductsAdminPage() {
     if (!window.confirm("Deactivate this product?")) return;
     setDeleting(id);
     try {
-      await axios.delete(`/api/products/${id}`);
+      await axios.delete(`${API_URL}/api/products/${id}`);
       toast.success("Product deactivated");
       fetchProducts();
     } catch {
@@ -115,7 +118,7 @@ export default function ProductsAdminPage() {
 
   const handleToggleActive = async (p) => {
     try {
-      await axios.put(`/api/products/${p._id}`, { isActive: !p.isActive });
+      await axios.put(`${API_URL}/api/products/${p._id}`, { isActive: !p.isActive });
       toast.success(`Product ${p.isActive ? "hidden" : "activated"}`);
       fetchProducts();
     } catch {

@@ -16,6 +16,9 @@ const ADJUSTMENT_TYPES = [
   { value: 'damage',      label: 'Damage / Loss',      color: '#7c3aed', desc: 'Damaged or lost stock'  },
 ];
 
+const API_URL = process.env.REACT_APP_API_URL;
+
+
 const TYPE_BADGE = {
   stock_in:   { bg: '#dcfce7', color: '#16a34a' },
   stock_out:  { bg: '#fee2e2', color: '#dc2626' },
@@ -46,9 +49,9 @@ export default function InventoryPage() {
   const loadDashboard = () => {
     setLoading(true);
     Promise.all([
-      axios.get('/api/inventory/dashboard'),
-      axios.get('/api/products?limit=200'),
-      axios.get('/api/suppliers'),
+      axios.get(`${API_URL}/api/inventory/dashboard`),
+      axios.get(`${API_URL}/api/products?limit=200`),
+      axios.get(`${API_URL}/api/suppliers`),
     ]).then(([dashRes, prodRes, supRes]) => {
       setStats(dashRes.data.stats || {});
       setLogs(dashRes.data.recentLogs || []);
@@ -63,7 +66,7 @@ export default function InventoryPage() {
 
   /* ---- Load low stock separately ---- */
   const loadLowStock = () => {
-    axios.get('/api/products/low-stock')
+    axios.get(`${API_URL}/api/products/low-stock`)
       .then(r => setLowStock(r.data.products || []))
       .catch(() => {});
   };
@@ -73,7 +76,7 @@ export default function InventoryPage() {
     setLogsLoading(true);
     const params = new URLSearchParams({ page: logPage, limit: LOG_LIMIT });
     if (logFilter) params.append('type', logFilter);
-    axios.get(`/api/inventory?${params}`)
+    axios.get(`${API_URL}/api/inventory?${params}`)
       .then(r => { setLogs(r.data.logs || []); setLogTotal(r.data.total || 0); })
       .catch(() => toast.error('Failed to load logs'))
       .finally(() => setLogsLoading(false));
@@ -92,7 +95,7 @@ export default function InventoryPage() {
   const searchBarcode = async () => {
     if (!barcodeVal.trim()) return;
     try {
-      const { data } = await axios.get(`/api/inventory/barcode/${barcodeVal.trim()}`);
+      const { data } = await axios.get(`${API_URL}/api/inventory/barcode/${barcodeVal.trim()}`);
       setBarcodeResult(data.product);
       toast.success(`Found: ${data.product.name}`);
     } catch {

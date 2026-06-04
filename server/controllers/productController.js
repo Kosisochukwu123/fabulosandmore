@@ -15,7 +15,9 @@ exports.getProducts = async (req, res, next) => {
       featured,
       inStock,
     } = req.query;
-    const query = { isActive: true };
+    const isAdmin =
+      req.user?.role === "admin" || req.user?.role === "warehouse";
+    const query = isAdmin ? {} : { isActive: true };
     if (search) query.$text = { $search: search };
     if (category) query.category = category;
     if (brand) query.brand = brand;
@@ -151,12 +153,10 @@ exports.createProduct = async (req, res, next) => {
   } catch (err) {
     if (err.code === 11000) {
       const field = Object.keys(err.keyPattern || {})[0] || "field";
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: `A product with this ${field} already exists`,
-        });
+      return res.status(400).json({
+        success: false,
+        message: `A product with this ${field} already exists`,
+      });
     }
     next(err);
   }
@@ -196,12 +196,10 @@ exports.updateProduct = async (req, res, next) => {
     res.json({ success: true, product });
   } catch (err) {
     if (err.code === 11000)
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "A product with this SKU already exists",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "A product with this SKU already exists",
+      });
     next(err);
   }
 };
@@ -224,12 +222,10 @@ exports.addReview = async (req, res, next) => {
         .status(404)
         .json({ success: false, message: "Product not found" });
     if (product.reviews.find((r) => r.user.toString() === req.user.id))
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "You have already reviewed this product",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "You have already reviewed this product",
+      });
     product.reviews.push({ user: req.user.id, rating, comment });
     product.ratings.count = product.reviews.length;
     product.ratings.average =

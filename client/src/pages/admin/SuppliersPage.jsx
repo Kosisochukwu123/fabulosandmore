@@ -15,6 +15,10 @@ const EMPTY_FORM = {
   leadTimeDays: 7, minimumOrderValue: 0, paymentTerms: '', rating: 5, notes: ''
 };
 
+
+const API_URL = process.env.REACT_APP_API_URL;
+
+
 export default function SuppliersPage() {
   const [suppliers, setSuppliers] = useState([]);
   const [loading, setLoading]     = useState(true);
@@ -25,7 +29,7 @@ export default function SuppliersPage() {
 
   const fetchSuppliers = () => {
     setLoading(true);
-    axios.get('/api/suppliers')
+    axios.get(`${API_URL}/api/suppliers`)
       .then(r => setSuppliers(r.data.suppliers || []))
       .catch(() => toast.error('Failed to load suppliers'))
       .finally(() => setLoading(false));
@@ -47,7 +51,7 @@ export default function SuppliersPage() {
   const handleDelete = async (id) => {
     if (!window.confirm('Deactivate this supplier?')) return;
     try {
-      await axios.delete(`/api/suppliers/${id}`);
+      await axios.delete(`${API_URL}/api/suppliers/${id}`);
       toast.success('Supplier deactivated');
       fetchSuppliers();
     } catch { toast.error('Failed'); }

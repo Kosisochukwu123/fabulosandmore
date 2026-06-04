@@ -27,6 +27,9 @@ import { useAuth } from "../../context/AuthContext";
 const GOLD = "#D4AF37";
 const COLORS = [GOLD, "#1A1A1A", "#3B82F6", "#22C55E", "#F59E0B", "#EF4444"];
 
+
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function AdminDashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -35,7 +38,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     axios
-      .get("/api/analytics/dashboard")
+      .get(`${API_URL}/api/analytics/dashboard`)
       .then((r) => setData(r.data.data || {}))
       .catch(() => setData({}))
       .finally(() => setLoading(false));

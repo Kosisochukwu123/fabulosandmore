@@ -21,6 +21,10 @@ const STATUS_CONFIG = {
   refunded:         { label: 'Refunded',          color: '#6b7280', bg: '#f3f4f6', icon: FiRefreshCw },
 };
 
+
+const API_URL = process.env.REACT_APP_API_URL;
+
+
 const STATUS_FLOW = [
   'pending','confirmed','processing','packed','shipped','out_for_delivery','delivered'
 ];
@@ -48,7 +52,7 @@ export default function OrdersAdminPage() {
     const params = new URLSearchParams({ page, limit: LIMIT });
     if (statusFilter) params.append('status', statusFilter);
     if (search)       params.append('search', search);
-    axios.get(`/api/orders?${params}`)
+    axios.get(`${API_URL}/api/orders?${params}`)
       .then(r => { setOrders(r.data.orders || []); setTotal(r.data.total || 0); })
       .catch(() => toast.error('Failed to load orders'))
       .finally(() => setLoading(false));
@@ -63,7 +67,7 @@ export default function OrdersAdminPage() {
   const updateStatus = async (orderId, status) => {
     setUpdating(orderId);
     try {
-      await axios.put(`/api/orders/${orderId}/status`, {
+      await axios.put(`${API_URL}/api/orders/${orderId}/status`, {
         status,
         message: `Order ${STATUS_CONFIG[status]?.label || status}`
       });
