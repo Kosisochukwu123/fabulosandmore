@@ -1,7 +1,11 @@
 const SiteSettings = require("../models/SiteSettings");
 
+/* ---- GET settings (public) ---- */
 exports.getSettings = async (req, res, next) => {
   try {
+    /* Cache for 2 minutes at the HTTP level — CDN and browser both benefit */
+    res.set("Cache-Control", "public, max-age=120, stale-while-revalidate=300");
+
     const settings = await SiteSettings.getSettings();
     res.json({ success: true, settings });
   } catch (err) {
@@ -9,6 +13,7 @@ exports.getSettings = async (req, res, next) => {
   }
 };
 
+/* ---- UPDATE settings (admin only) ---- */
 exports.updateSettings = async (req, res, next) => {
   try {
     const settings = await SiteSettings.findOneAndUpdate(
@@ -22,6 +27,7 @@ exports.updateSettings = async (req, res, next) => {
   }
 };
 
+/* ---- ADD coupon ---- */
 exports.addCoupon = async (req, res, next) => {
   try {
     const { code, discount, expiresAt, maxUses, description } = req.body;
@@ -48,6 +54,7 @@ exports.addCoupon = async (req, res, next) => {
   }
 };
 
+/* ---- UPDATE coupon ---- */
 exports.updateCoupon = async (req, res, next) => {
   try {
     const settings = await SiteSettings.getSettings();
@@ -64,6 +71,7 @@ exports.updateCoupon = async (req, res, next) => {
   }
 };
 
+/* ---- DELETE coupon ---- */
 exports.deleteCoupon = async (req, res, next) => {
   try {
     const settings = await SiteSettings.getSettings();
@@ -75,6 +83,7 @@ exports.deleteCoupon = async (req, res, next) => {
   }
 };
 
+/* ---- VALIDATE coupon (cart) ---- */
 exports.validateCoupon = async (req, res, next) => {
   try {
     const { code, cartTotal } = req.body;
