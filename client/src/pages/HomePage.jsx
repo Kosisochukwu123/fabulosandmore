@@ -13,9 +13,8 @@ import {
 } from 'react-icons/gi';
 import { MdOutlineBlender } from 'react-icons/md';
 import { useCart } from '../context/CartContext';
+import { useSettings } from '../context/SettingsContext';
 import AIRecommendations from '../components/ai/AIRecommendations';
-
-
 
 const HERO_SLIDES = [
   {
@@ -47,58 +46,23 @@ const HERO_SLIDES = [
   },
 ];
 
-/* ---- Category images from Unsplash (free, no auth needed) ---- */
 const CATEGORIES = [
-  {
-    name: 'Kitchen Utensils',
-    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80',
-    count: '200+ items',
-    color: '#FBF5E0',
-    Icon: GiKnifeFork,
-  },
-  {
-    name: 'Cookware',
-    image: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=80',
-    count: '150+ items',
-    color: '#F0F4FF',
-    Icon: GiCookingPot,
-  },
-  {
-    name: 'Bakeware',
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&q=80',
-    count: '100+ items',
-    color: '#FFF0F0',
-    Icon: GiCupcake,
-  },
-  {
-    name: 'Storage Solutions',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80',
-    count: '80+ items',
-    color: '#F0FFF4',
-    Icon: GiOpenChest,
-  },
-  {
-    name: 'Cleaning Tools',
-    image: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=400&q=80',
-    count: '60+ items',
-    color: '#FFF8E1',
-    Icon: GiWashingMachine,
-  },
-  {
-    name: 'Small Appliances',
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&q=80',
-    count: '40+ items',
-    color: '#F5F0FF',
-    Icon: MdOutlineBlender,
-  },
+  { name: 'Kitchen Utensils', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80', count: '200+ items', Icon: GiKnifeFork  },
+  { name: 'Cookware',         image: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=80', count: '150+ items', Icon: GiCookingPot  },
+  { name: 'Bakeware',         image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&q=80', count: '100+ items', Icon: GiCupcake     },
+  { name: 'Storage Solutions',image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80', count: '80+ items',  Icon: GiOpenChest   },
+  { name: 'Cleaning Tools',   image: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=400&q=80', count: '60+ items',  Icon: GiWashingMachine },
+  { name: 'Small Appliances', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&q=80', count: '40+ items',  Icon: MdOutlineBlender },
 ];
 
 const FEATURES = [
-  { icon: FiTruck,    title: 'Free Delivery',   desc: 'On orders above ₦50,000' },
-  { icon: FiShield,   title: 'Genuine Products', desc: '100% authentic quality'   },
-  { icon: FiRefreshCw,title: 'Easy Returns',     desc: '30-day return policy'     },
-  { icon: FiPhone,    title: '24/7 Support',     desc: 'Via WhatsApp & phone'     },
+  { icon: FiTruck,     title: 'Free Delivery',   desc: 'On orders above ₦50,000' },
+  { icon: FiShield,    title: 'Genuine Products', desc: '100% authentic quality'  },
+  { icon: FiRefreshCw, title: 'Easy Returns',     desc: '30-day return policy'    },
+  { icon: FiPhone,     title: '24/7 Support',     desc: 'Via WhatsApp & phone'    },
 ];
+
+const API_URL = process.env.REACT_APP_API_URL || '';
 
 export default function HomePage() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -107,12 +71,16 @@ export default function HomePage() {
   const [slide, setSlide]                       = useState(0);
   const [sliding, setSliding]                   = useState(false);
   const { addToCart }                           = useCart();
+  const { settings }                            = useSettings();
   const navigate                                = useNavigate();
   const slideTimer                              = useRef(null);
 
-  
-const API_URL = process.env.REACT_APP_API_URL;
-// console.log("API_URL:", API_URL);
+  /* Build WhatsApp link from settings */
+  const waNumber  = (settings?.business?.whatsapp || '').replace(/[^0-9]/g, '');
+  const waText    = settings?.business?.whatsappText || 'Hi! I need help.';
+  const waLink    = waNumber ? `https://wa.me/${waNumber}?text=${encodeURIComponent(waText)}` : '#';
+  const waBulk    = waNumber ? `https://wa.me/${waNumber}?text=${encodeURIComponent('I want a bulk order quote')}` : '#';
+  const phone     = settings?.business?.phone || '';
 
   useEffect(() => {
     axios.get(`${API_URL}/api/products?featured=true&limit=6`)
@@ -123,7 +91,6 @@ const API_URL = process.env.REACT_APP_API_URL;
       .catch(() => {});
   }, []);
 
-  /* Auto-advance hero */
   const startTimer = () => {
     clearInterval(slideTimer.current);
     slideTimer.current = setInterval(() => {
@@ -175,7 +142,7 @@ const API_URL = process.env.REACT_APP_API_URL;
             <Link to={current.ctaLink} className="hero-btn-primary">
               {current.cta} <FiArrowRight />
             </Link>
-            <a href="https://wa.me/2348000000000" target="_blank" rel="noreferrer" className="hero-btn-wa">
+            <a href={waLink} target="_blank" rel="noreferrer" className="hero-btn-wa">
               <FaWhatsapp /> WhatsApp Us
             </a>
           </div>
@@ -253,7 +220,6 @@ const API_URL = process.env.REACT_APP_API_URL;
           <div className="cat-grid">
             {CATEGORIES.map(({ name, image, count, Icon }) => (
               <Link key={name} to={`/catalog?category=${encodeURIComponent(name)}`} className="cat-card">
-                {/* Category image */}
                 <div className="cat-card-img-wrap">
                   <img src={image} alt={name} className="cat-card-img" />
                   <div className="cat-card-img-overlay" />
@@ -411,15 +377,14 @@ const API_URL = process.env.REACT_APP_API_URL;
             <Link to="/bulk-orders" className="hero-btn-primary">
               Get a Custom Quote <FiArrowRight />
             </Link>
-            <a href="https://wa.me/2348000000000?text=I%20want%20a%20bulk%20order%20quote"
-              target="_blank" rel="noreferrer" className="hero-btn-wa">
+            <a href={waBulk} target="_blank" rel="noreferrer" className="hero-btn-wa">
               <FaWhatsapp /> WhatsApp Us
             </a>
           </div>
         </div>
       </section>
 
-      <AIChatButton />
+      <AIChatButton waNumber={phone} />
     </div>
   );
 }
@@ -433,11 +398,15 @@ function ProductCard({ product, addToCart, navigate }) {
     : 0;
 
   return (
-    <div className="product-card" onClick={() => navigate(`/product/${product._id}`)} role="button" tabIndex={0}>
+    <div className="product-card"
+      onClick={() => navigate(`/product/${product._id}`)}
+      role="button" tabIndex={0}>
       <div className="product-card-img-wrap">
         <img
-          src={product.images?.[0]?.url || 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80'}
+          src={product.images?.[0]?.url || '/placeholder.svg'}
           alt={product.name}
+          loading="lazy"
+          decoding="async"
         />
         {discount > 0 && <span className="product-card-badge">-{discount}%</span>}
         <button className="product-card-cart-btn"
@@ -458,7 +427,9 @@ function ProductCard({ product, addToCart, navigate }) {
         </div>
         <div className="product-card-prices">
           <span className="card-price">₦{product.price?.toLocaleString()}</span>
-          {product.comparePrice && <span className="card-compare">₦{product.comparePrice?.toLocaleString()}</span>}
+          {product.comparePrice && (
+            <span className="card-compare">₦{product.comparePrice?.toLocaleString()}</span>
+          )}
         </div>
         {product.stock > 0 && product.stock <= product.lowStockThreshold && (
           <div className="product-card-low-stock">Only {product.stock} left in stock</div>
@@ -469,14 +440,14 @@ function ProductCard({ product, addToCart, navigate }) {
 }
 
 /* ================================================================
-   AI CHAT BUTTON
+   AI CHAT BUTTON — uses phone from settings for fallback message
    ================================================================ */
-function AIChatButton() {
+function AIChatButton({ waNumber }) {
   const [open, setOpen]         = useState(false);
   const [messages, setMessages] = useState([
     { role: 'assistant', text: "Hi! I'm your Fabulous & More AI assistant. Ask me about products, pricing, delivery or anything kitchen-related!" }
   ]);
-  const [input, setInput]   = useState('');
+  const [input, setInput]     = useState('');
   const [loading, setLoading] = useState(false);
   const messagesRef           = useRef(null);
 
@@ -493,16 +464,16 @@ function AIChatButton() {
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setLoading(true);
     try {
-      const { data } = await axios.post('/api/ai/chat', {
+      const { data } = await axios.post(`${API_URL}/api/ai/chat`, {
         message: userMsg,
         history: messages.map(m => ({ role: m.role, content: m.text }))
       });
       setMessages(prev => [...prev, { role: 'assistant', text: data.reply }]);
     } catch {
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        text: "Sorry, having trouble right now. WhatsApp us at +234 800 000 0000!"
-      }]);
+      const fallback = waNumber
+        ? `Sorry, having trouble right now. Call or WhatsApp us on ${waNumber}!`
+        : "Sorry, having trouble right now. Please try again later.";
+      setMessages(prev => [...prev, { role: 'assistant', text: fallback }]);
     }
     setLoading(false);
   };
@@ -514,7 +485,7 @@ function AIChatButton() {
           <div className="chat-header">
             <div>
               <div className="chat-header-title">AI Assistant</div>
-              <div className="chat-header-sub">Fabulous & More · Online</div>
+              <div className="chat-header-sub">Fabulous &amp; More · Online</div>
             </div>
             <button className="chat-close" onClick={() => setOpen(false)}><FiX /></button>
           </div>
