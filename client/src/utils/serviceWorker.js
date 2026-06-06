@@ -5,6 +5,9 @@
 
 let swRegistration = null;
 
+const API_URL = process.env.REACT_APP_API_URL;
+
+
 /* ---- Register the service worker ---- */
 export async function registerSW() {
   if (!('serviceWorker' in navigator)) return;
@@ -52,7 +55,7 @@ async function collectImageUrls() {
 
   /* 4. Fetch product images from API */
   try {
-    const res  = await fetch('/api/products?limit=200&fields=images');
+    const res  = await fetch(`${API_URL}/api/products?limit=200&fields=images`);
     const data = await res.json();
     (data.products || []).forEach(p => {
       (p.images || []).forEach(img => {
