@@ -102,16 +102,19 @@ if (process.env.NODE_ENV === 'production') {
 /* ---- Global error handler ---- */
 app.use(errorHandler);
 
-/* ---- Start ---- */
+// ---- Start ----
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📦 Uploads: http://localhost:${PORT}/uploads`);
-});
+
+// Only listen when running locally, NOT on Vercel
+if (process.env.NODE_ENV !== 'production') {
+  server.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`📦 Uploads: http://localhost:${PORT}/uploads`);
+  });
+}
 
 process.on('unhandledRejection', err => { console.error('💥 Unhandled Rejection:', err.message); server.close(() => process.exit(1)); });
 process.on('uncaughtException',  err => { console.error('💥 Uncaught Exception:',  err.message); process.exit(1); });
 
-module.exports = { app, server };
-
+// Single clean export
 module.exports = app;
