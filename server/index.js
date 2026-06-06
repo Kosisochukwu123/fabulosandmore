@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express       = require('express');
-const http          = require('http');
+// const http          = require('http');
 const path          = require('path');
 const cors          = require('cors');
 const helmet        = require('helmet');
@@ -23,19 +23,19 @@ const aiRoutes        = require('./routes/ai');
 const settingsRoutes  = require('./routes/settings');
 
 const app    = express();
-const server = http.createServer(app);
+// const server = http.createServer(app);
 
-let io;
-try {
-  const socketIo = require('socket.io');
-  io = socketIo(server, { cors: { origin: process.env.CLIENT_URL || 'http://localhost:3000', credentials: true } });
-  io.on('connection', socket => {
-    socket.on('join-admin', () => socket.join('admin-room'));
-  });
-  app.set('io', io);
-} catch (e) {
-  console.warn('[Socket.IO] Not available:', e.message);
-}
+// let io;
+// try {
+//   const socketIo = require('socket.io');
+//   io = socketIo(server, { cors: { origin: process.env.CLIENT_URL || 'http://localhost:3000', credentials: true } });
+//   io.on('connection', socket => {
+//     socket.on('join-admin', () => socket.join('admin-room'));
+//   });
+//   app.set('io', io);
+// } catch (e) {
+//   console.warn('[Socket.IO] Not available:', e.message);
+// }
 
 connectDB();
 
@@ -101,20 +101,15 @@ if (process.env.NODE_ENV === 'production') {
 
 /* ---- Global error handler ---- */
 app.use(errorHandler);
-
-// ---- Start ----
+/* ---- Start ---- */
 const PORT = process.env.PORT || 5000;
 
-// Only listen when running locally, NOT on Vercel
 if (process.env.NODE_ENV !== 'production') {
+  const http = require('http');
+  const server = http.createServer(app);
   server.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
-    console.log(`📦 Uploads: http://localhost:${PORT}/uploads`);
   });
 }
 
-process.on('unhandledRejection', err => { console.error('💥 Unhandled Rejection:', err.message); server.close(() => process.exit(1)); });
-process.on('uncaughtException',  err => { console.error('💥 Uncaught Exception:',  err.message); process.exit(1); });
-
-// Single clean export
 module.exports = app;
