@@ -53,7 +53,6 @@ const EMPTY_FORM = {
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-
 export default function ProductsAdminPage() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -118,7 +117,9 @@ export default function ProductsAdminPage() {
 
   const handleToggleActive = async (p) => {
     try {
-      await axios.put(`${API_URL}/api/products/${p._id}`, { isActive: !p.isActive });
+      await axios.put(`${API_URL}/api/products/${p._id}`, {
+        isActive: !p.isActive,
+      });
       toast.success(`Product ${p.isActive ? "hidden" : "activated"}`);
       fetchProducts();
     } catch {
@@ -469,10 +470,10 @@ function ProductFormModal({ product, onClose, onSaved }) {
       const config = { headers: { "Content-Type": "multipart/form-data" } };
 
       if (isEdit) {
-        await axios.put(`/api/products/${product._id}`, fd, config);
+        await axios.put(`${API_URL}/api/products/${product._id}`, fd, config);
         toast.success("Product updated!");
       } else {
-        await axios.post("/api/products", fd, config);
+        await axios.post(`${API_URL}/api/products`, fd, config);
         toast.success("Product created!");
       }
       onSaved();
