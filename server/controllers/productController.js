@@ -177,11 +177,14 @@ exports.updateProduct = async (req, res, next) => {
         .filter(Boolean);
     if (req.files?.length) {
       const serverUrl = process.env.SERVER_URL || "http://localhost:5000";
-      const newImgs = req.files.map((f) => ({
-        url: f.path || `${serverUrl}/uploads/${f.filename}`,
-        publicId: f.filename || f.public_id || "",
-        alt: body.name || "Product image",
-      }));
+      const newImgs = req.files.map((f) => {
+        console.log("Uploaded file:", JSON.stringify(f)); // ← add this
+        return {
+          url: f.path || f.secure_url || `${serverUrl}/uploads/${f.filename}`,
+          publicId: f.filename || f.public_id || "",
+          alt: body.name || "Product image",
+        };
+      });
       const existing = Array.isArray(body.images) ? body.images : [];
       body.images = [...existing, ...newImgs];
     }
@@ -195,6 +198,8 @@ exports.updateProduct = async (req, res, next) => {
         .json({ success: false, message: "Product not found" });
     res.json({ success: true, product });
   } catch (err) {
+    console.error("updateProduct error:", err); // ← add this line
+
     if (err.code === 11000)
       return res.status(400).json({
         success: false,
