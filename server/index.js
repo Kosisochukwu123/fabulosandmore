@@ -24,6 +24,25 @@ const settingsRoutes  = require('./routes/settings');
 
 const app    = express();
 app.set('trust proxy', 1);
+
+
+// ✅ Handle OPTIONS preflight BEFORE rate limiting
+app.options('*', cors({
+  origin: (origin, cb) => {
+    const allowedOrigins = [
+      process.env.CLIENT_URL || 'http://localhost:3000',
+      'https://fabulosandmore.vercel.app',
+      'http://localhost:3000',
+      'http://localhost:5000',
+      'https://fabulosandmore.onrender.com'
+    ];
+    if (!origin || allowedOrigins.includes(origin)) cb(null, true);
+    else cb(new Error(`CORS: ${origin} not allowed`));
+  },
+  credentials: true,
+  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization'],
+}));
 // const server = http.createServer(app);
 
 // let io;
