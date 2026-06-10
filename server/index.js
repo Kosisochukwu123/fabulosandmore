@@ -23,6 +23,7 @@ const aiRoutes        = require('./routes/ai');
 const settingsRoutes  = require('./routes/settings');
 
 const app    = express();
+app.set('trust proxy', 1);
 // const server = http.createServer(app);
 
 // let io;
