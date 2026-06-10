@@ -39,9 +39,7 @@ const PRICE_RANGES = [
   { label: "Above ₦50,000", min: "50000", max: "" },
 ];
 
-
 const API_URL = process.env.REACT_APP_API_URL;
-
 
 export default function CatalogPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -53,7 +51,7 @@ export default function CatalogPage() {
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState("grid");
   const [page, setPage] = useState(1);
-  const [filterOpen, setFilterOpen] = useState(false); // mobile filter drawer
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const category = searchParams.get("category") || "";
   const search = searchParams.get("search") || "";
@@ -90,9 +88,20 @@ export default function CatalogPage() {
     setPage(1);
   };
 
+  // Atomic update for multiple params at once (fixes price range overwrite bug)
+  const setMultiple = (pairs) => {
+    const p = new URLSearchParams(searchParams);
+    pairs.forEach(([key, value]) => {
+      value ? p.set(key, value) : p.delete(key);
+    });
+    setSearchParams(p);
+    setPage(1);
+  };
+
   const clearAll = () => {
     setSearchParams({});
     setPage(1);
+    setFilterOpen(false);
   };
 
   const hasFilters = category || minPrice || maxPrice;
@@ -122,7 +131,10 @@ export default function CatalogPage() {
         <div className="cat-filter-options">
           <button
             className={`cat-filter-opt ${!category ? "active" : ""}`}
-            onClick={() => set("category", "")}
+            onClick={() => {
+              set("category", "");
+              setFilterOpen(false);
+            }}
           >
             All Categories
           </button>
@@ -130,7 +142,10 @@ export default function CatalogPage() {
             <button
               key={cat}
               className={`cat-filter-opt ${category === cat ? "active" : ""}`}
-              onClick={() => set("category", cat)}
+              onClick={() => {
+                set("category", cat);
+                setFilterOpen(false);
+              }}
             >
               {cat}
             </button>
@@ -145,8 +160,8 @@ export default function CatalogPage() {
           <button
             className={`cat-filter-opt ${!minPrice && !maxPrice ? "active" : ""}`}
             onClick={() => {
-              set("minPrice", "");
-              set("maxPrice", "");
+              setMultiple([["minPrice", ""], ["maxPrice", ""]]);
+              setFilterOpen(false);
             }}
           >
             Any Price
@@ -156,8 +171,8 @@ export default function CatalogPage() {
               key={r.label}
               className={`cat-filter-opt ${minPrice === r.min && maxPrice === r.max ? "active" : ""}`}
               onClick={() => {
-                set("minPrice", r.min);
-                set("maxPrice", r.max);
+                setMultiple([["minPrice", r.min], ["maxPrice", r.max]]);
+                setFilterOpen(false);
               }}
             >
               {r.label}
@@ -166,7 +181,7 @@ export default function CatalogPage() {
         </div>
       </div>
 
-      {/* Custom price */}
+      {/* Custom price — intentionally does NOT close drawer so user can type both fields */}
       <div className="cat-filter-group">
         <div className="cat-filter-label">Custom Price (₦)</div>
         <div className="cat-price-row">
@@ -223,7 +238,6 @@ export default function CatalogPage() {
           {/* Toolbar */}
           <div className="cat-toolbar">
             <div className="cat-toolbar-left">
-              {/* Mobile filter toggle */}
               <button
                 className="cat-filter-toggle"
                 onClick={() => setFilterOpen(true)}
@@ -283,12 +297,7 @@ export default function CatalogPage() {
               {(minPrice || maxPrice) && (
                 <span className="cat-chip">
                   ₦{minPrice || "0"} – {maxPrice ? `₦${maxPrice}` : "∞"}
-                  <button
-                    onClick={() => {
-                      set("minPrice", "");
-                      set("maxPrice", "");
-                    }}
-                  >
+                  <button onClick={() => setMultiple([["minPrice", ""], ["maxPrice", ""]])}>
                     <FiX size={11} />
                   </button>
                 </span>

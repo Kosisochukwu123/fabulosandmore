@@ -234,12 +234,17 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  /* Prevent any child from overflowing on mobile */
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .pp-meta-row {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .pp-category {
@@ -266,6 +271,7 @@
   color: #1a1a1a;
   line-height: 1.3;
   margin: 0;
+  word-break: break-word;
 }
 
 /* Rating row */
@@ -273,6 +279,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .pp-stars { display: flex; gap: 2px; }
@@ -365,6 +372,8 @@
   display: flex;
   gap: 10px;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .pp-qty-wrap {
@@ -404,6 +413,7 @@
 
 .pp-add-to-cart {
   flex: 1;
+  min-width: 0;
   height: 44px;
   background: linear-gradient(135deg, #d4af37, #b8941f);
   color: #1a1a1a;
@@ -419,6 +429,8 @@
   gap: 8px;
   box-shadow: 0 4px 16px rgba(212,175,55,0.35);
   transition: transform 0.2s, box-shadow 0.2s, background 0.25s;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .pp-add-to-cart:hover:not(:disabled) {
@@ -464,6 +476,7 @@
   cursor: pointer;
   transition: background 0.2s, transform 0.18s;
   letter-spacing: 0.3px;
+  box-sizing: border-box;
 }
 
 .pp-buy-now:hover:not(:disabled) {
@@ -488,6 +501,7 @@
   font-size: 14px;
   font-weight: 700;
   transition: background 0.2s;
+  box-sizing: border-box;
 }
 
 .pp-whatsapp-btn:hover { background: #128c3e; }
@@ -501,6 +515,8 @@
   border-radius: 10px;
   border: 1px solid #f0f0f0;
   flex-wrap: wrap;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .pp-trust-badge {
@@ -786,6 +802,7 @@
   outline: none;
   transition: border-color 0.18s;
   margin-bottom: 12px;
+  box-sizing: border-box;
 }
 
 .pp-review-textarea:focus { border-color: #d4af37; }
@@ -1108,11 +1125,111 @@
   .pp-trust-badges { flex-direction: column; gap: 8px; }
   .pp-tab-content { padding: 18px 16px; }
   .pp-skeleton { grid-template-columns: 1fr; }
+
+  /* ---- Mobile overflow fixes ---- */
+  .pp-info {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .pp-purchase-block {
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .pp-add-to-cart {
+    font-size: 13px;
+    padding: 0 10px;
+  }
+
+  .pp-buy-now,
+  .pp-whatsapp-btn {
+    font-size: 13px;
+  }
+
+  .pp-trust-badges {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .pp-trust-badge {
+    min-width: unset;
+    flex: none;
+    width: 100%;
+  }
+
+  .pp-review-textarea {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .pp-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pp-tab {
+    white-space: nowrap;
+    font-size: 13px;
+    padding: 14px 12px;
+  }
 }
 
 @media (max-width: 480px) {
-  .pp-purchase-block { flex-wrap: wrap; }
-  .pp-add-to-cart { flex: 1; min-width: 0; }
+  .pp-page {
+    overflow-x: hidden;
+  }
+
+  .pp-info {
+    overflow: hidden;
+    max-width: 100vw;
+  }
+
+  .pp-purchase-block {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .pp-qty-wrap {
+    flex-shrink: 0;
+  }
+
+  .pp-qty-btn {
+    width: 32px;
+  }
+
+  .pp-qty {
+    min-width: 32px;
+  }
+
+  .pp-add-to-cart {
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+    gap: 4px;
+  }
+
+  .pp-wishlist-btn {
+    width: 40px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  .pp-buy-now,
+  .pp-whatsapp-btn {
+    width: 100%;
+    font-size: 14px;
+  }
+
   .pp-related-grid { grid-template-columns: repeat(2, 1fr); }
   .pp-review-summary { flex-direction: column; }
+
+  .pp-name {
+    font-size: 20px;
+  }
+
+  .pp-price {
+    font-size: 24px;
+  }
 }

@@ -111,23 +111,6 @@ app.get('/api/health', (req, res) => res.json({
 }));
 
 
-
-
-// Add temporarily to server/index.js
-app.get('/api/test-cloudinary', async (req, res) => {
-  try {
-    const cloudinary = require('cloudinary').v2;
-    const result = await cloudinary.api.ping();
-    res.json({ success: true, result });
-  } catch (err) {
-    res.json({ success: false, error: err.message });
-  }
-});
-
-
-
-
-
 /* ---- 404 for unknown API routes ---- */
 app.use('/api/*', (req, res) => res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found` }));
 

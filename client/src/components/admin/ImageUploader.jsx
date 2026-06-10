@@ -6,7 +6,6 @@ import '../../styles/ImageUploader.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-
 export default function ImageUploader({ productId, existingImages = [], onUpdated }) {
   const [images, setImages]       = useState(existingImages);
   const [uploading, setUploading] = useState(false);
@@ -62,7 +61,6 @@ export default function ImageUploader({ productId, existingImages = [], onUpdate
 
     setUploading(false);
     setProgress(0);
-    // Clear the file input so the same file can be re-uploaded
     if (inputRef.current) inputRef.current.value = '';
   };
 
@@ -105,14 +103,14 @@ export default function ImageUploader({ productId, existingImages = [], onUpdate
   return (
     <div className="img-uploader">
 
-      {/* Drop zone */}
-      <div
+      {/* Drop zone — type="button" prevents triggering parent form submit */}
+      <button
+        type="button"
         className={`img-drop-zone ${uploading ? 'uploading' : ''} ${dragOver ? 'drag-over' : ''}`}
         onDrop={onDrop}
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onClick={() => !uploading && inputRef.current?.click()}
-        role="button"
         aria-label="Upload images"
       >
         <input
@@ -143,7 +141,7 @@ export default function ImageUploader({ productId, existingImages = [], onUpdate
             <div className="img-drop-sub">JPG, PNG, WebP — max 5MB each · multiple allowed</div>
           </>
         )}
-      </div>
+      </button>
 
       {/* Preview grid */}
       {images.length > 0 && (
@@ -165,6 +163,7 @@ export default function ImageUploader({ productId, existingImages = [], onUpdate
                 {/* Set as main button */}
                 {i !== 0 && (
                   <button
+                    type="button"
                     className="img-set-main-btn"
                     onClick={() => setMain(i)}
                     title="Set as main image"
@@ -176,6 +175,7 @@ export default function ImageUploader({ productId, existingImages = [], onUpdate
 
                 {/* Remove button */}
                 <button
+                  type="button"
                   className="img-preview-remove"
                   onClick={() => removeImage(i)}
                   aria-label="Remove image"
@@ -187,6 +187,7 @@ export default function ImageUploader({ productId, existingImages = [], onUpdate
 
             {/* Add more button */}
             <button
+              type="button"
               className="img-add-more-btn"
               onClick={() => inputRef.current?.click()}
               title="Add more images"
