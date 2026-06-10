@@ -248,7 +248,7 @@ function LowStockPanel() {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get("/api/products/low-stock")
+      .get(`${API_URL}/api/products/low-stock`)
       .then((r) => setLowStock(r.data.products || []))
       .catch(() => {});
   }, []);
@@ -263,7 +263,7 @@ function LowStockPanel() {
         </div>
         <button
           className="adm-card-link"
-          onClick={() => navigate("/admin/inventory")}
+          onClick={() => navigate(`${API_URL}/admin/inventory`)}
           style={{
             background: "none",
             border: "none",
